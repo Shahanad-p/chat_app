@@ -48,7 +48,16 @@ class _ProfileScreenState extends State<ProfileScreen> {
               )),
           //save button
           TextButton(
-            onPressed: () => Navigator.of(context).pop(newValue),
+            onPressed: () async {
+              if (newValue.trim().isNotEmpty) {
+                //only update if there is something in the textfield
+                await userCollection
+                    .doc(currentUser.email)
+                    .update({fields: newValue});
+                setState(() {}); // update UI
+                Navigator.of(context).pop();
+              }
+            },
             child: Text(
               'Save',
               style: TextStyle(fontWeight: FontWeight.bold),
@@ -57,12 +66,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
         ],
       ),
     );
-
-    //update in firestore
-    if (newValue.trim().length > 0) {
-      //only update if there is something in the textfield
-      await userCollection.doc(currentUser.email).update({fields: newValue});
-    }
   }
 
   @override
@@ -119,14 +122,15 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 MyTextBox(
                   text: userData['username'],
                   sectionName: 'Username',
-                  onPressed: () => editFields('Username'),
+                  onPressed: () =>
+                      editFields('username'), // changed to lowercase
                 ),
                 //bio
                 SizedBox(height: 20),
                 MyTextBox(
                   text: userData['bio'],
                   sectionName: ' Bio',
-                  onPressed: () => editFields('Bio'),
+                  onPressed: () => editFields('bio'), // changed to lowercase
                 ),
                 //user posts
                 SizedBox(height: 20),
