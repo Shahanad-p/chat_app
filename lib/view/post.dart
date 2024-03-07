@@ -1,3 +1,6 @@
+import 'package:chat_app/helper/helper_method.dart';
+import 'package:chat_app/widget/comment_button.dart';
+import 'package:chat_app/widget/comments.dart';
 import 'package:chat_app/widget/like_button.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -24,6 +27,7 @@ class UserPost extends StatefulWidget {
 }
 
 class _UserPostState extends State<UserPost> {
+  final TextEditingController commentTextController = TextEditingController();
   final currentUser = FirebaseAuth.instance.currentUser!;
   bool isLiked = false;
   @override
@@ -55,6 +59,57 @@ class _UserPostState extends State<UserPost> {
     }
   }
 
+  //add comment
+  void addComment(String commentText) {
+    //write the comment to firestore under the comments collection for tyhis post
+    FirebaseFirestore.instance
+        .collection('User posts')
+        .doc(widget.postId)
+        .collection('Comments')
+        .add({
+      'CommentText': commentText,
+      'CommentedBy': currentUser.email,
+      'CommentTime': Timestamp.now(),
+    });
+  }
+
+  //show a dialogue box for adding comments
+  void showCommentDialog() {
+    showDialog(
+      context: context,
+      builder: (context) => AlertDialog(
+        title: Text('Add comment'),
+        content: TextField(
+          controller: commentTextController,
+          decoration: InputDecoration(hintText: 'Write a comment..'),
+        ),
+        actions: [
+          //cancel button
+          TextButton(
+              onPressed: () {
+                Navigator.pop(context);
+                commentTextController.clear();
+              },
+              child: Text(
+                'Cancel',
+                style: TextStyle(fontWeight: FontWeight.bold),
+              )),
+          //post  button
+          TextButton(
+              onPressed: () {
+                addComment(commentTextController.text);
+                commentTextController.clear();
+                Navigator.pop(context);
+              },
+              child: Text(
+                'Post',
+                style: TextStyle(fontWeight: FontWeight.bold),
+              )),
+        ],
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -75,17 +130,65 @@ class _UserPostState extends State<UserPost> {
               height: 40,
             )),
           ),
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  widget.user,
+                  style: TextStyle(color: Colors.grey.shade500),
+                ),
+                Text(
+                  widget.message,
+                  style: TextStyle(fontWeight: FontWeight.bold),
+                ),
+                SizedBox(height: 10),
+                //comment under the post
+                StreamBuilder<QuerySnapshot>(
+                    stream: FirebaseFirestore.instance
+                        .collection('User posts')
+                        .doc(widget.postId)
+                        .collection('Comments')
+                        .orderBy('CommentTime', descending: true)
+                        .snapshots(),
+                    builder: (context, snapshot) {
+                      //show loading circle if no data yet
+                      if (!snapshot.hasData) {
+                        return Center(
+                          child: CircularProgressIndicator(),
+                        );
+                      }
+                      return ListView(
+                        shrinkWrap: true,
+                        physics: NeverScrollableScrollPhysics(),
+                        children: snapshot.data!.docs.map((doc) {
+                          //get the comment
+                          final commentData =
+                              doc.data() as Map<String, dynamic>;
+
+                          //return the comment
+                          return MyComments(
+                            text: commentData['CommentText'],
+                            user: commentData['CommentedBy'],
+                            time: formatDate(commentData['CommentTime']),
+                          );
+                        }).toList(),
+                      );
+                    })
+              ],
+            ),
+          ),
           Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
+              //comment button
+              CommentButton(onTap: showCommentDialog),
+              SizedBox(height: 5),
+
+              //comment count
               Text(
-                widget.user,
-                style: TextStyle(color: Colors.grey.shade500),
+                '0',
+                style: TextStyle(color: const Color.fromARGB(255, 95, 92, 92)),
               ),
-              Text(
-                widget.message,
-                style: TextStyle(fontWeight: FontWeight.bold),
-              )
             ],
           ),
           Column(
