@@ -1,3 +1,4 @@
+import 'package:chat_app/helper/helper_method.dart';
 import 'package:chat_app/view/drawer.dart';
 import 'package:chat_app/view/post.dart';
 import 'package:chat_app/view/profile_screen.dart';
@@ -90,6 +91,7 @@ class _HomeSccreenState extends State<HomeSccreen> {
                         message: post['Message'],
                         user: post['UserEmail'],
                         postId: post.id,
+                        time: formatDate(post['Timestamb']),
                         likes: List<String>.from(post['Likes'] ?? []),
                       );
                     },

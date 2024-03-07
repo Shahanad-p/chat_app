@@ -1,4 +1,5 @@
 import 'package:chat_app/helper/helper_method.dart';
+import 'package:chat_app/view/delete_button.dart';
 import 'package:chat_app/widget/comment_button.dart';
 import 'package:chat_app/widget/comments.dart';
 import 'package:chat_app/widget/like_button.dart';
@@ -11,7 +12,7 @@ class UserPost extends StatefulWidget {
   final String user;
   final String postId;
   final List<String> likes;
-  // final String time;
+  final String time;
 
   const UserPost({
     super.key,
@@ -19,7 +20,7 @@ class UserPost extends StatefulWidget {
     required this.user,
     required this.postId,
     required this.likes,
-    // required this.time,
+    required this.time,
   });
 
   @override
@@ -118,6 +119,54 @@ class _UserPostState extends State<UserPost> {
     });
   }
 
+  //delete post
+  void deletePost() {
+    //show a dialog box asking for confirmation
+    showDialog(
+      context: context,
+      builder: (context) => AlertDialog(
+        title: Text('Delete Post'),
+        content: Text('Are you sure to delete this post?'),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.pop(context),
+            child: Text('Cancel'),
+          ),
+          TextButton(
+            onPressed: () async {
+              //delete the comment from fire store first
+              //(if you only delete the post, the comments will still be the stored in firestore)
+              final commentDocs = await FirebaseFirestore.instance
+                  .collection('User posts')
+                  .doc(widget.postId)
+                  .collection('Comments')
+                  .get();
+              for (var doc in commentDocs.docs) {
+                await FirebaseFirestore.instance
+                    .collection('User posts')
+                    .doc(widget.postId)
+                    .collection('Comments')
+                    .doc(doc.id)
+                    .delete();
+              }
+              //then delete the post
+              FirebaseFirestore.instance
+                  .collection('User posts')
+                  .doc(widget.postId)
+                  .delete()
+                  .then((value) => print('post delete'))
+                  .catchError((error) => print('failed to delete post'));
+
+              //dismiss the dialog box
+              Navigator.pop(context);
+            },
+            child: Text('Delete'),
+          )
+        ],
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -137,24 +186,36 @@ class _UserPostState extends State<UserPost> {
                 backgroundColor: Colors.white,
                 radius: 30,
                 child: ClipRRect(
-                    borderRadius: BorderRadius.circular(50),
-                    child: Image.asset(
-                      'assets/user.png',
-                      fit: BoxFit.cover,
-                      height: 60,
-                    )),
+                  borderRadius: BorderRadius.circular(50),
+                  child: Image.asset(
+                    'assets/user.png',
+                    fit: BoxFit.cover,
+                    height: 60,
+                  ),
+                ),
               ),
               SizedBox(width: 10),
               Expanded(
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text(
-                      widget.user,
-                      style: TextStyle(
-                          color: Colors.grey.shade700,
-                          fontSize: 14,
-                          fontWeight: FontWeight.bold),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text(
+                          widget.user,
+                          style: TextStyle(
+                              color: Colors.grey.shade700,
+                              fontSize: 14,
+                              fontWeight: FontWeight.bold),
+                        ),
+                        Text(
+                          widget.time,
+                          style: TextStyle(color: Colors.grey),
+                        ),
+                        if (widget.user == currentUser.email)
+                          DeleteButton(onTap: deletePost),
+                      ],
                     ),
                     Text(
                       widget.message,
@@ -196,7 +257,7 @@ class _UserPostState extends State<UserPost> {
           ),
           SizedBox(height: 20),
           Row(
-            // mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
               LikeButton(
                 isLiked: isLiked,
@@ -206,7 +267,7 @@ class _UserPostState extends State<UserPost> {
                 '${widget.likes.length} likes',
                 style: TextStyle(color: Colors.grey.shade600),
               ),
-              SizedBox(width: 110),
+              SizedBox(width: 70),
               CommentButton(
                 onTap: showCommentDialog,
               ),
