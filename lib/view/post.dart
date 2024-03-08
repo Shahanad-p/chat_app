@@ -1,3 +1,4 @@
+// ignore_for_file: avoid_print, use_build_context_synchronously
 import 'package:chat_app/helper/helper_method.dart';
 import 'package:chat_app/view/delete_button.dart';
 import 'package:chat_app/widget/comment_button.dart';
@@ -44,21 +45,24 @@ class _UserPostState extends State<UserPost> {
     setState(() {
       isLiked = !isLiked;
     });
-
+    //access the document in firebase
     DocumentReference postRef =
         FirebaseFirestore.instance.collection('User posts').doc(widget.postId);
 
     if (isLiked) {
+      //if the post is now liked then add the users email to the 'likes field'
       postRef.update({
         'Likes': FieldValue.arrayUnion([currentUser.email])
       });
     } else {
+      //if the post is now unliked, remove the users email  from the 'likes field'
       postRef.update({
         'Likes': FieldValue.arrayRemove([currentUser.email])
       });
     }
   }
 
+  //add comment
   void addComment(String commentText) {
     FirebaseFirestore.instance
         .collection('User posts')
@@ -68,10 +72,24 @@ class _UserPostState extends State<UserPost> {
       'CommentText': commentText,
       'CommentedBy': currentUser.email,
       'CommentTime': Timestamp.now(),
-    }).then((value) =>
-            fetchCommentCount()); // Update comment count after adding
+    }).then((value) => fetchCommentCount());
   }
 
+  //update the comment count
+  void fetchCommentCount() {
+    FirebaseFirestore.instance
+        .collection('User posts')
+        .doc(widget.postId)
+        .collection('Comments')
+        .get()
+        .then((snapshot) {
+      setState(() {
+        commentCount = snapshot.docs.length;
+      });
+    });
+  }
+
+  //show a dialogue box for adding comments
   void showCommentDialog() {
     showDialog(
       context: context,
@@ -92,31 +110,19 @@ class _UserPostState extends State<UserPost> {
                 style: TextStyle(fontWeight: FontWeight.bold),
               )),
           TextButton(
-              onPressed: () {
-                addComment(commentTextController.text);
-                commentTextController.clear();
-                Navigator.pop(context);
-              },
-              child: Text(
-                'Post',
-                style: TextStyle(fontWeight: FontWeight.bold),
-              )),
+            onPressed: () {
+              addComment(commentTextController.text);
+              commentTextController.clear();
+              Navigator.pop(context);
+            },
+            child: Text(
+              'Post',
+              style: TextStyle(fontWeight: FontWeight.bold),
+            ),
+          ),
         ],
       ),
     );
-  }
-
-  void fetchCommentCount() {
-    FirebaseFirestore.instance
-        .collection('User posts')
-        .doc(widget.postId)
-        .collection('Comments')
-        .get()
-        .then((snapshot) {
-      setState(() {
-        commentCount = snapshot.docs.length;
-      });
-    });
   }
 
   //delete post
@@ -154,7 +160,7 @@ class _UserPostState extends State<UserPost> {
                   .collection('User posts')
                   .doc(widget.postId)
                   .delete()
-                  .then((value) => print('post delete'))
+                  .then((value) => print('Delete the post'))
                   .catchError((error) => print('failed to delete post'));
 
               //dismiss the dialog box
@@ -213,8 +219,6 @@ class _UserPostState extends State<UserPost> {
                           widget.time,
                           style: TextStyle(color: Colors.grey),
                         ),
-                        if (widget.user == currentUser.email)
-                          DeleteButton(onTap: deletePost),
                       ],
                     ),
                     Text(
@@ -228,6 +232,7 @@ class _UserPostState extends State<UserPost> {
             ],
           ),
           SizedBox(height: 10),
+          //comment under the post
           StreamBuilder<QuerySnapshot>(
             stream: FirebaseFirestore.instance
                 .collection('User posts')
@@ -236,11 +241,14 @@ class _UserPostState extends State<UserPost> {
                 .orderBy('CommentTime', descending: true)
                 .snapshots(),
             builder: (context, snapshot) {
+              //show loading circle if no data yet
               if (!snapshot.hasData) {
                 return Center(child: CircularProgressIndicator());
               }
               List<Widget> commentWidgets = snapshot.data!.docs.map((doc) {
+                //get the comment
                 final commentData = doc.data() as Map<String, dynamic>;
+                //return the comment
                 return Padding(
                   padding: const EdgeInsets.only(top: 8),
                   child: MyComments(
@@ -257,7 +265,7 @@ class _UserPostState extends State<UserPost> {
           ),
           SizedBox(height: 20),
           Row(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            mainAxisAlignment: MainAxisAlignment.spaceAround,
             children: [
               LikeButton(
                 isLiked: isLiked,
@@ -267,7 +275,6 @@ class _UserPostState extends State<UserPost> {
                 '${widget.likes.length} likes',
                 style: TextStyle(color: Colors.grey.shade600),
               ),
-              SizedBox(width: 70),
               CommentButton(
                 onTap: showCommentDialog,
               ),
@@ -275,6 +282,9 @@ class _UserPostState extends State<UserPost> {
                 '$commentCount comments',
                 style: TextStyle(color: Colors.grey.shade600),
               ),
+              SizedBox(width: 20),
+              if (widget.user == currentUser.email)
+                DeleteButton(onTap: deletePost),
             ],
           ),
         ],

@@ -1,3 +1,5 @@
+// ignore_for_file: use_build_context_synchronously
+
 import 'package:chat_app/view/texts_box.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -39,14 +41,12 @@ class _ProfileScreenState extends State<ProfileScreen> {
           },
         ),
         actions: [
-          //cancel button
           TextButton(
               onPressed: () => Navigator.pop(context),
               child: Text(
                 'Cancel',
                 style: TextStyle(fontWeight: FontWeight.bold),
               )),
-          //save button
           TextButton(
             onPressed: () async {
               if (newValue.trim().isNotEmpty) {

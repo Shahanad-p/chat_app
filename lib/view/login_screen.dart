@@ -1,3 +1,5 @@
+// ignore_for_file: use_build_context_synchronously
+
 import 'package:chat_app/view/register_screen.dart';
 import 'package:chat_app/widget/button.dart';
 import 'package:chat_app/widget/textfields.dart';

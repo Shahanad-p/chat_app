@@ -1,3 +1,4 @@
+// ignore_for_file: use_build_context_synchronously
 import 'package:chat_app/widget/button.dart';
 import 'package:chat_app/widget/textfields.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';

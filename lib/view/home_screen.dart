@@ -124,7 +124,7 @@ class _HomeSccreenState extends State<HomeSccreen> {
             ),
             SizedBox(height: 20),
             Text(
-              'Logged in as : ' + currentUser.email!,
+              'Logged in as : ${currentUser.email!}',
               style: TextStyle(
                   fontWeight: FontWeight.bold,
                   color: const Color.fromARGB(255, 42, 154, 46)),
