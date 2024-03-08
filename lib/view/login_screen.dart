@@ -117,7 +117,38 @@ class _LoginScreenState extends State<LoginScreen> {
                       ),
                     )
                   ],
-                )
+                ),
+                SizedBox(height: 40),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  children: [
+                    SizedBox(
+                      height: 40,
+                      width: 40,
+                      child: Image.asset('assets/code.png'),
+                    ),
+                    SizedBox(
+                      height: 40,
+                      width: 40,
+                      child: Image.asset('assets/facebook (1).png'),
+                    ),
+                    SizedBox(
+                      height: 40,
+                      width: 40,
+                      child: Image.asset('assets/google.png'),
+                    ),
+                    SizedBox(
+                      height: 40,
+                      width: 40,
+                      child: InkWell(
+                          onTap: () {
+                            // Navigator.of(context).push(MaterialPageRoute(
+                            //     builder: (context) => OtpStartingScreen()));
+                          },
+                          child: Image.asset('assets/mobile-phone.png')),
+                    )
+                  ],
+                ),
               ],
             ),
           ),

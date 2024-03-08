@@ -22,7 +22,7 @@ class MyDrawer extends StatelessWidget {
               radius: 50,
               backgroundColor: Colors.white,
               child: Image.asset(
-                'assets/user.png',
+                'assets/man.png',
                 width: 80,
               ),
             ),

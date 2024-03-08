@@ -1,6 +1,6 @@
 // ignore_for_file: avoid_print, use_build_context_synchronously
 import 'package:chat_app/helper/helper_method.dart';
-import 'package:chat_app/view/delete_button.dart';
+import 'package:chat_app/widget/delete_button.dart';
 import 'package:chat_app/widget/comment_button.dart';
 import 'package:chat_app/widget/comments.dart';
 import 'package:chat_app/widget/like_button.dart';
@@ -275,6 +275,7 @@ class _UserPostState extends State<UserPost> {
                 '${widget.likes.length} likes',
                 style: TextStyle(color: Colors.grey.shade600),
               ),
+              SizedBox(width: 30),
               CommentButton(
                 onTap: showCommentDialog,
               ),
