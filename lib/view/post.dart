@@ -32,10 +32,11 @@ class _UserPostState extends State<UserPost> {
   final TextEditingController commentTextController = TextEditingController();
   final currentUser = FirebaseAuth.instance.currentUser!;
   bool isLiked = false;
-  int commentCount = 0; // Initialize comment count
+  int commentCount = 0;
 
   @override
   void initState() {
+    // final provider = Provider.of<PostProvider>(context, listen: false);
     super.initState();
     isLiked = widget.likes.contains(currentUser.email);
     fetchCommentCount();

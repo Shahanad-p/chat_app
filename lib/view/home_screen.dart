@@ -38,7 +38,6 @@ class _HomeSccreenState extends State<HomeSccreen> {
       ),
       drawer: MyDrawer(
         onProfileTap: goToProfilePage,
-        //logout
         onSignOut: provider.signOut,
       ),
       body: Padding(
