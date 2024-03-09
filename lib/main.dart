@@ -3,7 +3,7 @@ import 'package:chat_app/controller/login_provider.dart';
 import 'package:chat_app/controller/profile_provider.dart';
 import 'package:chat_app/controller/register_provider.dart';
 import 'package:chat_app/view/auth.dart';
-import 'package:chat_app/firebase_options.dart';
+import 'package:chat_app/service/firebase_options.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';

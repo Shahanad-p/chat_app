@@ -1,6 +1,5 @@
 import 'package:chat_app/controller/home_provider.dart';
 import 'package:chat_app/helper/helper_method.dart';
-import 'package:chat_app/view/profile_screen.dart';
 import 'package:chat_app/widget/drawer.dart';
 import 'package:chat_app/view/post.dart';
 import 'package:chat_app/widget/textfields.dart';
@@ -16,12 +15,6 @@ class HomeSccreen extends StatefulWidget {
 }
 
 class _HomeSccreenState extends State<HomeSccreen> {
-  void goToProfilePage() {
-    Navigator.pop(context);
-    Navigator.of(context)
-        .push(MaterialPageRoute(builder: (context) => ProfileScreen()));
-  }
-
   @override
   Widget build(BuildContext context) {
     final provider = Provider.of<HomeProvider>(context, listen: false);
@@ -36,9 +29,11 @@ class _HomeSccreenState extends State<HomeSccreen> {
         backgroundColor: Colors.white,
         elevation: 0,
       ),
-      drawer: MyDrawer(
-        onProfileTap: goToProfilePage,
-        onSignOut: provider.signOut,
+      drawer: Consumer<HomeProvider>(
+        builder: (context, value, child) => MyDrawer(
+          onProfileTap: () => value.goToProfilePage(context),
+          onSignOut: provider.signOut,
+        ),
       ),
       body: Padding(
         padding: const EdgeInsets.all(12),

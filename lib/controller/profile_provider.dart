@@ -45,7 +45,6 @@ class ProfileProvider extends ChangeNotifier {
                 await userCollection
                     .doc(currentUser.email)
                     .update({fields: newValue});
-                // setState(() {}); // update UI
                 Navigator.of(context).pop();
                 notifyListeners();
               }
