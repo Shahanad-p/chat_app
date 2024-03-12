@@ -13,7 +13,7 @@ class UserPost extends StatefulWidget {
   final String user;
   final String postId;
   final List<String> likes;
-  final String time;
+  // final String time;
 
   const UserPost({
     super.key,
@@ -21,7 +21,7 @@ class UserPost extends StatefulWidget {
     required this.user,
     required this.postId,
     required this.likes,
-    required this.time,
+    // required this.time,
   });
 
   @override
@@ -213,10 +213,10 @@ class _UserPostState extends State<UserPost> {
                           fontSize: 14,
                           fontWeight: FontWeight.bold),
                     ),
-                    Text(
-                      widget.time,
-                      style: TextStyle(color: Colors.grey),
-                    ),
+                    // Text(
+                    //   widget.time,
+                    //   style: TextStyle(color: Colors.grey),
+                    // ),
                     Text(
                       widget.message,
                       style:

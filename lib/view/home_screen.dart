@@ -1,15 +1,14 @@
 import 'package:chat_app/controller/home_provider.dart';
-import 'package:chat_app/widget/helper_method.dart';
+import 'package:chat_app/model/model.dart';
 import 'package:chat_app/widget/drawer.dart';
 import 'package:chat_app/view/post.dart';
 import 'package:chat_app/widget/textfields.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-class HomeSccreen extends StatelessWidget {
+class HomeScreen extends StatelessWidget {
   // final String phoneNumber;
-  const HomeSccreen({
+  const HomeScreen({
     super.key,
     // required this.phoneNumber,
   });
@@ -40,39 +39,66 @@ class HomeSccreen extends StatelessWidget {
           builder: (context, value, child) => Column(
             children: [
               Expanded(
-                  child: StreamBuilder(
-                stream: FirebaseFirestore.instance
-                    .collection('User posts')
-                    .orderBy('Timestamb', descending: false)
-                    .snapshots(),
-                builder: (context, snapshot) {
-                  if (snapshot.hasData) {
-                    return ListView.builder(
-                      itemCount: snapshot.data!.docs.length,
-                      itemBuilder: (context, index) {
-                        //get the message
-                        final post = snapshot.data!.docs[index];
-                        return UserPost(
-                          message: post['Message'],
-                          user: post['UserEmail'],
-                          postId: post.id,
-                          time: formatDate(post['Timestamb']),
-                          likes: List<String>.from(post['Likes'] ?? []),
+                // child: StreamBuilder(
+                //   stream: FirebaseFirestore.instance
+                //       .collection('User posts')
+                //       .orderBy('Timestamb', descending: false)
+                //       .snapshots(),
+                //   builder: (context, snapshot) {
+                //     if (snapshot.hasData) {
+                //       return ListView.builder(
+                //         itemCount: snapshot.data!.docs.length,
+                //         itemBuilder: (context, index) {
+                //           //get the message
+                //           final post = snapshot.data!.docs[index];
+                //           return UserPost(
+                //             message: post['Message'],
+                //             user: post['UserEmail'],
+                //             postId: post.id,
+                //             time: formatDate(post['Timestamb']),
+                //             likes: List<String>.from(post['Likes'] ?? []),
+                //           );
+                //         },
+                //       );
+                //     } else {
+                //       if (snapshot.hasError) {
+                //         return Center(
+                //           child: Text('Error: ${snapshot.error}'),
+                //         );
+                //       }
+                //     }
+                //     return Center(
+                //       child: CircularProgressIndicator(),
+                //     );
+                //   },
+                // ),
+                child: StreamBuilder(
+                    stream: Provider.of<HomeProvider>(context, listen: false)
+                        .userPostsStream,
+                    builder:
+                        (context, AsyncSnapshot<List<UserPostModel>> snapshot) {
+                      if (snapshot.hasData) {
+                        return ListView.builder(
+                          itemCount: snapshot.data!.length,
+                          itemBuilder: (context, index) {
+                            final post = snapshot.data![index];
+                            return UserPost(
+                              message: post.message,
+                              user: post.userEmail,
+                              postId: post.id,
+                              // time: formatDate(post.timestamp as Timestamp),
+                              likes: post.likes,
+                            );
+                          },
                         );
-                      },
-                    );
-                  } else {
-                    if (snapshot.hasError) {
+                      } else if (snapshot.hasError) {
+                        return Center(child: Text('Error ${snapshot.error}'));
+                      }
                       return Center(
-                        child: Text('Error: ${snapshot.error}'),
+                        child: CircularProgressIndicator(),
                       );
-                    }
-                  }
-                  return Center(
-                    child: CircularProgressIndicator(),
-                  );
-                },
-              )),
+                    }),
+              ),
               SizedBox(height: 30),
               Row(
                 children: [

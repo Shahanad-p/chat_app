@@ -1,11 +1,13 @@
+import 'package:chat_app/model/model.dart';
+import 'package:chat_app/service/service.dart';
 import 'package:chat_app/view/profile_screen.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 class HomeProvider extends ChangeNotifier {
   final currentUser = FirebaseAuth.instance.currentUser!;
   final TextEditingController textController = TextEditingController();
+  final FirestoreService _firestoreService = FirestoreService();
   //sign out
   void signOut() {
     FirebaseAuth.instance.signOut();
@@ -13,20 +15,18 @@ class HomeProvider extends ChangeNotifier {
   }
 
   //post message
-  postMessage() {
+  postMessage() async {
     //only post if there is something in the textfield
     if (textController.text.isNotEmpty) {
-      //store in firebase
-      FirebaseFirestore.instance.collection('User posts').add({
-        'UserEmail': currentUser.email,
-        'Message': textController.text,
-        'Timestamb': Timestamp.now(),
-        'Likes': [],
-      });
+      await _firestoreService.postMessage(
+          currentUser.email!, textController.text);
+      textController.clear();
       notifyListeners();
     }
-    textController.clear();
   }
+
+  Stream<List<UserPostModel>> get userPostsStream =>
+      _firestoreService.streamUserPosts();
 
   void goToProfilePage(context) {
     Navigator.pop(context);

@@ -1,5 +1,5 @@
+// ignore_for_file: use_build_context_synchronously
 import 'dart:developer';
-
 import 'package:chat_app/view/home_screen.dart';
 import 'package:chat_app/widget/button.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -84,7 +84,7 @@ class _OtpScreenState extends State<OtpScreen> {
                             Navigator.pushAndRemoveUntil(
                                 context,
                                 MaterialPageRoute(
-                                    builder: (context) => HomeSccreen()),
+                                    builder: (context) => HomeScreen()),
                                 (route) => false);
                           } catch (e) {
                             log(e.toString());
