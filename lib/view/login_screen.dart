@@ -6,51 +6,9 @@ import 'package:chat_app/widget/textfields.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-class LoginScreen extends StatefulWidget {
+class LoginScreen extends StatelessWidget {
   final Function()? onTap;
   const LoginScreen({super.key, this.onTap});
-
-  @override
-  State<LoginScreen> createState() => _LoginScreenState();
-}
-
-class _LoginScreenState extends State<LoginScreen> {
-  // final TextEditingController emailController = TextEditingController();
-  // final TextEditingController passwordlController = TextEditingController();
-
-  // //user signed in
-  // void signIn() async {
-  //   //loading circle
-  //   showDialog(
-  //     context: context,
-  //     builder: (context) => Center(
-  //       child: CircularProgressIndicator(),
-  //     ),
-  //   );
-
-  //   try {
-  //     await FirebaseAuth.instance.signInWithEmailAndPassword(
-  //         email: emailController.text, password: passwordlController.text);
-
-  //     // pop loading circle
-  //     if (context.mounted) Navigator.pop(context);
-  //   } on FirebaseAuthException catch (e) {
-  //     //pop loading circle
-  //     Navigator.pop(context);
-  //     //display error message
-  //     displayMessage(e.code);
-  //   }
-  // }
-
-  // //display a message to user
-  // void displayMessage(String message) {
-  //   showDialog(
-  //     context: context,
-  //     builder: (context) => AlertDialog(
-  //       title: Text(message),
-  //     ),
-  //   );
-  // }
 
   @override
   Widget build(BuildContext context) {
@@ -105,7 +63,7 @@ class _LoginScreenState extends State<LoginScreen> {
                       ),
                       InkWell(
                         onTap: () {
-                          widget.onTap;
+                          onTap;
                           Navigator.of(context).push(MaterialPageRoute(
                               builder: (context) => RegisterScreen()));
                         },
@@ -121,17 +79,36 @@ class _LoginScreenState extends State<LoginScreen> {
                   ),
                   SizedBox(height: 40),
                   Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceAround,
+                    children: [
+                      Expanded(
+                        child: Container(
+                          margin: EdgeInsets.symmetric(horizontal: 10),
+                          color: Colors.grey,
+                          height: 1,
+                        ),
+                      ),
+                      Text(
+                        "Or connect with",
+                        style: TextStyle(
+                            fontSize: 16, fontWeight: FontWeight.bold),
+                      ),
+                      Expanded(
+                        child: Container(
+                          margin: EdgeInsets.symmetric(horizontal: 10),
+                          color: Colors.grey,
+                          height: 1,
+                        ),
+                      ),
+                    ],
+                  ),
+                  SizedBox(height: 30),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       SizedBox(
                         height: 40,
                         width: 40,
                         child: Image.asset('assets/code.png'),
-                      ),
-                      SizedBox(
-                        height: 40,
-                        width: 40,
-                        child: Image.asset('assets/facebook (1).png'),
                       ),
                       SizedBox(
                         height: 40,

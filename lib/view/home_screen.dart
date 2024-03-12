@@ -7,14 +7,9 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-class HomeSccreen extends StatefulWidget {
+class HomeSccreen extends StatelessWidget {
   const HomeSccreen({super.key});
 
-  @override
-  State<HomeSccreen> createState() => _HomeSccreenState();
-}
-
-class _HomeSccreenState extends State<HomeSccreen> {
   @override
   Widget build(BuildContext context) {
     final provider = Provider.of<HomeProvider>(context, listen: false);

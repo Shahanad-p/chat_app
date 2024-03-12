@@ -5,68 +5,9 @@ import 'package:chat_app/widget/textfields.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-class RegisterScreen extends StatefulWidget {
+class RegisterScreen extends StatelessWidget {
   final Function()? onTap;
   const RegisterScreen({super.key, this.onTap});
-
-  @override
-  State<RegisterScreen> createState() => _RegisterScreenState();
-}
-
-class _RegisterScreenState extends State<RegisterScreen> {
-  // final TextEditingController emailController = TextEditingController();
-  // final TextEditingController passwordController = TextEditingController();
-  // final TextEditingController confirmPassController = TextEditingController();
-
-  // //user sign Up
-  // void signUp() async {
-  //   showDialog(
-  //     context: context,
-  //     builder: (context) => Center(child: CircularProgressIndicator()),
-  //   );
-  //   //make sure password match
-  //   if (passwordController.text != confirmPassController.text) {
-  //     Navigator.pop(context);
-  //     //show error to user
-  //     displayMessage('Passwords don\'t match');
-  //     return;
-  //   }
-
-  //   try {
-  //     //create the user
-  //     UserCredential userCredential = await FirebaseAuth.instance
-  //         .createUserWithEmailAndPassword(
-  //             email: emailController.text, password: passwordController.text);
-
-  //     // after creating the user, create a new document in cloud firestore called Users
-  //     FirebaseFirestore.instance
-  //         .collection('Users')
-  //         .doc(userCredential.user!.email)
-  //         .set({
-  //       'username': emailController.text.split('@')[0], //initial username
-  //       'bio': 'empty bio' //initially empty bio
-  //       //add any additional; fields as needed
-  //     });
-
-  //     //pop loading circle
-  //     if (context.mounted) Navigator.pop(context);
-  //   } on FirebaseAuthException catch (e) {
-  //     //pop loading circle
-  //     Navigator.pop(context);
-  //     //show error to user
-  //     displayMessage(e.code);
-  //   }
-  // }
-
-  // //display dialogue message to user
-  // void displayMessage(String message) {
-  //   showDialog(
-  //     context: context,
-  //     builder: (context) => AlertDialog(
-  //       title: Text(message),
-  //     ),
-  //   );
-  // }
 
   @override
   Widget build(BuildContext context) {
@@ -126,7 +67,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                       ),
                       InkWell(
                         onTap: () {
-                          widget.onTap;
+                          onTap;
                           Navigator.pop(context);
                         },
                         child: Text(

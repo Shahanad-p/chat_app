@@ -14,7 +14,7 @@ class RegisterProvider extends ChangeNotifier {
     );
     //make sure password match
     if (passwordController.text != confirmPassController.text) {
-      Navigator.pop(context);
+      // Navigator.pop(context);
       //show error to user
       displayMessage('Passwords don\'t match', context);
       notifyListeners();
