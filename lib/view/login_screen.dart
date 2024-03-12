@@ -2,6 +2,7 @@
 import 'package:chat_app/controller/login_provider.dart';
 import 'package:chat_app/view/register_screen.dart';
 import 'package:chat_app/widget/button.dart';
+import 'package:chat_app/widget/image_path.dart';
 import 'package:chat_app/widget/textfields.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -102,31 +103,20 @@ class LoginScreen extends StatelessWidget {
                     ],
                   ),
                   SizedBox(height: 30),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      SizedBox(
-                        height: 40,
-                        width: 40,
-                        child: Image.asset('assets/code.png'),
-                      ),
-                      SizedBox(
-                        height: 40,
-                        width: 40,
-                        child: Image.asset('assets/google.png'),
-                      ),
-                      SizedBox(
-                        height: 40,
-                        width: 40,
-                        child: InkWell(
-                            onTap: () {
-                              // Navigator.of(context).push(MaterialPageRoute(
-                              //     builder: (context) => OtpStartingScreen()));
-                            },
-                            child: Image.asset('assets/mobile-phone.png')),
-                      )
-                    ],
-                  ),
+                  Consumer<LoginProvider>(
+                    builder: (context, value, child) => Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      children: [
+                        MyImagePath(imagePath: 'assets/code.png', onTap: onTap),
+                        MyImagePath(
+                          imagePath: 'assets/google.png',
+                          onTap: value.signInWithGoogle,
+                        ),
+                        MyImagePath(
+                            imagePath: 'assets/mobile-phone.png', onTap: onTap),
+                      ],
+                    ),
+                  )
                 ],
               ),
             ),

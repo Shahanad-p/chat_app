@@ -1,5 +1,5 @@
 // ignore_for_file: avoid_print, use_build_context_synchronously
-import 'package:chat_app/helper/helper_method.dart';
+import 'package:chat_app/widget/helper_method.dart';
 import 'package:chat_app/widget/delete_button.dart';
 import 'package:chat_app/widget/comment_button.dart';
 import 'package:chat_app/widget/comments.dart';
@@ -126,7 +126,7 @@ class _UserPostState extends State<UserPost> {
     );
   }
 
-  //delete post
+  // //delete post
   void deletePost() {
     //show a dialog box asking for confirmation
     showDialog(
@@ -177,7 +177,7 @@ class _UserPostState extends State<UserPost> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: EdgeInsets.all(20),
+      padding: EdgeInsets.all(8),
       margin: EdgeInsets.symmetric(vertical: 5, horizontal: 10),
       decoration: BoxDecoration(
         color: const Color.fromARGB(255, 194, 209, 194),
@@ -206,21 +206,16 @@ class _UserPostState extends State<UserPost> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Text(
-                          widget.user,
-                          style: TextStyle(
-                              color: Colors.grey.shade700,
-                              fontSize: 14,
-                              fontWeight: FontWeight.bold),
-                        ),
-                        Text(
-                          widget.time,
-                          style: TextStyle(color: Colors.grey),
-                        ),
-                      ],
+                    Text(
+                      widget.user,
+                      style: TextStyle(
+                          color: Colors.grey.shade700,
+                          fontSize: 14,
+                          fontWeight: FontWeight.bold),
+                    ),
+                    Text(
+                      widget.time,
+                      style: TextStyle(color: Colors.grey),
                     ),
                     Text(
                       widget.message,
@@ -285,8 +280,10 @@ class _UserPostState extends State<UserPost> {
                 style: TextStyle(color: Colors.grey.shade600),
               ),
               SizedBox(width: 20),
-              if (widget.user == currentUser.email)
-                DeleteButton(onTap: deletePost),
+              // if (widget.user == currentUser.email)
+              DeleteButton(
+                onTap: deletePost,
+              ),
             ],
           ),
         ],

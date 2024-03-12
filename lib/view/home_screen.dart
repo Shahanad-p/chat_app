@@ -1,5 +1,5 @@
 import 'package:chat_app/controller/home_provider.dart';
-import 'package:chat_app/helper/helper_method.dart';
+import 'package:chat_app/widget/helper_method.dart';
 import 'package:chat_app/widget/drawer.dart';
 import 'package:chat_app/view/post.dart';
 import 'package:chat_app/widget/textfields.dart';

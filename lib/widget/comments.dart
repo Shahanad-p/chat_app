@@ -25,18 +25,13 @@ class MyComments extends StatelessWidget {
               comment,
               style: TextStyle(fontWeight: FontWeight.bold),
             ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceAround,
-              children: [
-                Text(
-                  user,
-                  style: TextStyle(color: Colors.grey),
-                ),
-                Text(
-                  time,
-                  style: TextStyle(color: Colors.grey),
-                ),
-              ],
+            Text(
+              user,
+              style: TextStyle(color: Colors.grey),
+            ),
+            Text(
+              time,
+              style: TextStyle(color: Colors.grey),
             ),
           ],
         ),
