@@ -1,12 +1,10 @@
 // ignore_for_file: use_build_context_synchronously
 import 'package:chat_app/controller/login_provider.dart';
-import 'package:chat_app/view/home_screen.dart';
+import 'package:chat_app/view/mobile_number_scree.dart';
 import 'package:chat_app/view/register_screen.dart';
 import 'package:chat_app/widget/button.dart';
 import 'package:chat_app/widget/image_path.dart';
 import 'package:chat_app/widget/textfields.dart';
-// ignore: unused_import
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -113,16 +111,6 @@ class LoginScreen extends StatelessWidget {
                         MyImagePath(
                           imagePath: 'assets/code.png',
                           onTap: value.signInWithGithub,
-                          // onTap: () async {
-                          //   try {
-                          //     Navigator.push(
-                          //         context,
-                          //         MaterialPageRoute(
-                          //             builder: (context) => HomeSccreen()));
-                          //   } catch (error) {
-                          //     print('error signin $error');
-                          //   }
-                          // },
                         ),
                         MyImagePath(
                           imagePath: 'assets/google.png',
@@ -130,7 +118,13 @@ class LoginScreen extends StatelessWidget {
                         ),
                         MyImagePath(
                           imagePath: 'assets/mobile-phone.png',
-                          onTap: onTap,
+                          onTap: () {
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) =>
+                                        MobileNumberScreen()));
+                          },
                         ),
                       ],
                     ),

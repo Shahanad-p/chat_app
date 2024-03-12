@@ -8,7 +8,11 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 class HomeSccreen extends StatelessWidget {
-  const HomeSccreen({super.key});
+  // final String phoneNumber;
+  const HomeSccreen({
+    super.key,
+    // required this.phoneNumber,
+  });
 
   @override
   Widget build(BuildContext context) {
