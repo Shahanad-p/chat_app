@@ -5,7 +5,6 @@ import 'package:flutter/material.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 
 class LoginProvider extends ChangeNotifier {
-  // final currentUser = FirebaseAuth.instance.currentUser!;
   final TextEditingController emailController = TextEditingController();
   final TextEditingController passwordlController = TextEditingController();
   //user signed in
@@ -22,13 +21,9 @@ class LoginProvider extends ChangeNotifier {
       await FirebaseAuth.instance.signInWithEmailAndPassword(
           email: emailController.text, password: passwordlController.text);
 
-      // pop loading circle
       if (context.mounted) Navigator.pop(context);
       notifyListeners();
     } on FirebaseAuthException catch (e) {
-      //pop loading circle
-      Navigator.pop(context);
-      //display error message
       displayMessage(e.code, context);
       notifyListeners();
     }
@@ -58,5 +53,11 @@ class LoginProvider extends ChangeNotifier {
 
     print(userCredential.user?.displayName);
     notifyListeners();
+  }
+
+  Future<UserCredential> signInWithGithub() async {
+    GithubAuthProvider githubAuthProvider = GithubAuthProvider();
+    notifyListeners();
+    return await FirebaseAuth.instance.signInWithProvider(githubAuthProvider);
   }
 }

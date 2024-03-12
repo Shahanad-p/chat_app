@@ -17,23 +17,25 @@ class MyComments extends StatelessWidget {
       decoration: BoxDecoration(
           color: Colors.grey[300], borderRadius: BorderRadius.circular(5)),
       child: Container(
-        padding: EdgeInsets.all(8),
-        margin: EdgeInsets.all(10),
-        child: Column(
-          children: [
-            Text(
-              comment,
-              style: TextStyle(fontWeight: FontWeight.bold),
-            ),
-            Text(
-              user,
-              style: TextStyle(color: Colors.grey),
-            ),
-            Text(
-              time,
-              style: TextStyle(color: Colors.grey),
-            ),
-          ],
+        padding: EdgeInsets.all(6),
+        margin: EdgeInsets.all(6),
+        child: Center(
+          child: Column(
+            children: [
+              Text(
+                comment,
+                style: TextStyle(fontWeight: FontWeight.bold),
+              ),
+              Text(
+                user,
+                style: TextStyle(color: Colors.grey),
+              ),
+              Text(
+                time,
+                style: TextStyle(color: Colors.grey),
+              ),
+            ],
+          ),
         ),
       ),
     );
