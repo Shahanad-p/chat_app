@@ -1,5 +1,6 @@
 import 'package:chat_app/controller/home_provider.dart';
 import 'package:chat_app/controller/login_provider.dart';
+import 'package:chat_app/controller/post_provider.dart';
 import 'package:chat_app/controller/profile_provider.dart';
 import 'package:chat_app/controller/register_provider.dart';
 import 'package:chat_app/view/auth.dart';
@@ -22,11 +23,10 @@ class MyApp extends StatelessWidget {
     return MultiProvider(
       providers: [
         ChangeNotifierProvider(create: (context) => HomeProvider()),
-        // ChangeNotifierProvider(create: (context) => PostProvider()),
+        ChangeNotifierProvider(create: (context) => PostProvider()),
         ChangeNotifierProvider(create: (context) => ProfileProvider()),
         ChangeNotifierProvider(create: (context) => RegisterProvider()),
         ChangeNotifierProvider(create: (context) => LoginProvider()),
-        // ChangeNotifierProvider(create: (context) => PostModel   ()),
       ],
       child: MaterialApp(
         home: AuthPage(),

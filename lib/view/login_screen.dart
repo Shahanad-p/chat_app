@@ -120,10 +120,10 @@ class LoginScreen extends StatelessWidget {
                           imagePath: 'assets/mobile-phone.png',
                           onTap: () {
                             Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) =>
-                                        MobileNumberScreen()));
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => MobileNumberScreen()),
+                            );
                           },
                         ),
                       ],

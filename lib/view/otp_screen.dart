@@ -77,7 +77,7 @@ class _OtpScreenState extends State<OtpScreen> {
                                 await PhoneAuthProvider.credential(
                                     verificationId: widget.verificationId,
                                     smsCode: otpController.text.toString());
-                            FirebaseAuth.instance
+                            await FirebaseAuth.instance
                                 .signInWithCredential(credential);
 
                             Navigator.pushAndRemoveUntil(

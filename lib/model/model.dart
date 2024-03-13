@@ -22,4 +22,12 @@ class UserPostModel {
       likes: List.from(data['Likes'] ?? []),
     );
   }
+  Map<String, dynamic> toJson() {
+    return {
+      'id': id,
+      'UserEmail': userEmail,
+      'Message': message,
+      'Likes': likes
+    };
+  }
 }

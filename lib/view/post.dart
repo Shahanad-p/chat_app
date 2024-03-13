@@ -1,4 +1,7 @@
 // ignore_for_file: avoid_print, use_build_context_synchronously
+import 'package:chat_app/controller/post_provider.dart';
+import 'package:chat_app/widget/comment_dialogue.dart';
+import 'package:chat_app/widget/delete_dialoque.dart';
 import 'package:chat_app/widget/helper_method.dart';
 import 'package:chat_app/widget/delete_button.dart';
 import 'package:chat_app/widget/comment_button.dart';
@@ -7,6 +10,7 @@ import 'package:chat_app/widget/like_button.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class UserPost extends StatefulWidget {
   final String message;
@@ -29,149 +33,16 @@ class UserPost extends StatefulWidget {
 }
 
 class _UserPostState extends State<UserPost> {
-  final TextEditingController commentTextController = TextEditingController();
   final currentUser = FirebaseAuth.instance.currentUser!;
-  bool isLiked = false;
-  int commentCount = 0;
+
+  // int commentCount = 0;
 
   @override
   void initState() {
-    // final provider = Provider.of<PostProvider>(context, listen: false);
+    final provider = Provider.of<PostProvider>(context, listen: false);
     super.initState();
-    isLiked = widget.likes.contains(currentUser.email);
-    fetchCommentCount();
-  }
-
-  void toggleLike() {
-    setState(() {
-      isLiked = !isLiked;
-    });
-    //access the document in firebase
-    DocumentReference postRef =
-        FirebaseFirestore.instance.collection('User posts').doc(widget.postId);
-
-    if (isLiked) {
-      //if the post is now liked then add the users email to the 'likes field'
-      postRef.update({
-        'Likes': FieldValue.arrayUnion([currentUser.email])
-      });
-    } else {
-      //if the post is now unliked, remove the users email  from the 'likes field'
-      postRef.update({
-        'Likes': FieldValue.arrayRemove([currentUser.email])
-      });
-    }
-  }
-
-  //add comment
-  void addComment(String commentText) {
-    FirebaseFirestore.instance
-        .collection('User posts')
-        .doc(widget.postId)
-        .collection('Comments')
-        .add({
-      'CommentText': commentText,
-      'CommentedBy': currentUser.email,
-      'CommentTime': Timestamp.now(),
-    }).then((value) => fetchCommentCount());
-  }
-
-  //update the comment count
-  void fetchCommentCount() {
-    FirebaseFirestore.instance
-        .collection('User posts')
-        .doc(widget.postId)
-        .collection('Comments')
-        .get()
-        .then((snapshot) {
-      setState(() {
-        commentCount = snapshot.docs.length;
-      });
-    });
-  }
-
-  //show a dialogue box for adding comments
-  void showCommentDialog() {
-    showDialog(
-      context: context,
-      builder: (context) => AlertDialog(
-        title: Text('Add comment'),
-        content: TextField(
-          controller: commentTextController,
-          decoration: InputDecoration(hintText: 'Write a comment..'),
-        ),
-        actions: [
-          TextButton(
-              onPressed: () {
-                Navigator.pop(context);
-                commentTextController.clear();
-              },
-              child: Text(
-                'Cancel',
-                style: TextStyle(fontWeight: FontWeight.bold),
-              )),
-          TextButton(
-            onPressed: () {
-              addComment(commentTextController.text);
-              commentTextController.clear();
-              Navigator.pop(context);
-            },
-            child: Text(
-              'Post',
-              style: TextStyle(fontWeight: FontWeight.bold),
-            ),
-          ),
-        ],
-      ),
-    );
-  }
-
-  // //delete post
-  void deletePost() {
-    //show a dialog box asking for confirmation
-    showDialog(
-      context: context,
-      builder: (context) => AlertDialog(
-        title: Text('Delete Post'),
-        content: Text('Are you sure to delete this post?'),
-        actions: [
-          TextButton(
-            onPressed: () => Navigator.pop(context),
-            child: Text('Cancel'),
-          ),
-          TextButton(
-            onPressed: () async {
-              //delete the comment from fire store first
-              //(if you only delete the post, the comments will still be the stored in firestore)
-              final commentDocs = await FirebaseFirestore.instance
-                  .collection('User posts')
-                  .doc(widget.postId)
-                  .collection('Comments')
-                  .get();
-              for (var doc in commentDocs.docs) {
-                await FirebaseFirestore.instance
-                    .collection('User posts')
-                    .doc(widget.postId)
-                    .collection('Comments')
-                    .doc(doc.id)
-                    .delete();
-              }
-              //then delete the post
-              FirebaseFirestore.instance
-                  .collection('User posts')
-                  .doc(widget.postId)
-                  .delete()
-                  .then((value) => print('Delete the post'))
-                  .catchError((error) => print('failed to delete post'));
-
-              //dismiss the dialog box
-              Navigator.pop(context);
-            },
-            child: Text('Delete'),
-          )
-        ],
-      ),
-    );
+    provider.isLiked = widget.likes.contains(currentUser.email);
+    provider.fetchCommentCount(widget.postId);
   }
 
   @override
@@ -213,10 +84,6 @@ class _UserPostState extends State<UserPost> {
                           fontSize: 14,
                           fontWeight: FontWeight.bold),
                     ),
-                    // Text(
-                    //   widget.time,
-                    //   style: TextStyle(color: Colors.grey),
-                    // ),
                     Text(
                       widget.message,
                       style:
@@ -260,31 +127,32 @@ class _UserPostState extends State<UserPost> {
             },
           ),
           SizedBox(height: 20),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceAround,
-            children: [
-              LikeButton(
-                isLiked: isLiked,
-                onTap: toggleLike,
-              ),
-              Text(
-                '${widget.likes.length} likes',
-                style: TextStyle(color: Colors.grey.shade600),
-              ),
-              SizedBox(width: 30),
-              CommentButton(
-                onTap: showCommentDialog,
-              ),
-              Text(
-                '$commentCount comments',
-                style: TextStyle(color: Colors.grey.shade600),
-              ),
-              SizedBox(width: 20),
-              // if (widget.user == currentUser.email)
-              DeleteButton(
-                onTap: deletePost,
-              ),
-            ],
+          Consumer<PostProvider>(
+            builder: (context, value, child) => Row(
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
+              children: [
+                LikeButton(
+                  isLiked: value.isLiked,
+                  onTap: () => value.toggleLike(widget.postId, value.isLiked),
+                ),
+                Text(
+                  '${widget.likes.length} likes',
+                  style: TextStyle(color: Colors.grey.shade600),
+                ),
+                SizedBox(width: 30),
+                CommentButton(
+                  onTap: () => showCommentDialog(context, widget.postId),
+                ),
+                Text(
+                  '${value.commentCount} comments',
+                  style: TextStyle(color: Colors.grey.shade600),
+                ),
+                SizedBox(width: 20),
+                // if (widget.user == currentUser.email)
+                DeleteButton(
+                    onTap: () => deletePostDialogue(context, widget.postId)),
+              ],
+            ),
           ),
         ],
       ),
