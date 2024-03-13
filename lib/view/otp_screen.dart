@@ -14,9 +14,8 @@ class OtpScreen extends StatefulWidget {
 }
 
 class _OtpScreenState extends State<OtpScreen> {
-  final currentUser = FirebaseAuth.instance.currentUser!;
   final TextEditingController otpController = TextEditingController();
-  // String? otpCode;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -75,10 +74,10 @@ class _OtpScreenState extends State<OtpScreen> {
                         if (otpController.text.isNotEmpty) {
                           try {
                             PhoneAuthCredential credential =
-                                PhoneAuthProvider.credential(
+                                await PhoneAuthProvider.credential(
                                     verificationId: widget.verificationId,
                                     smsCode: otpController.text.toString());
-                            await FirebaseAuth.instance
+                            FirebaseAuth.instance
                                 .signInWithCredential(credential);
 
                             Navigator.pushAndRemoveUntil(

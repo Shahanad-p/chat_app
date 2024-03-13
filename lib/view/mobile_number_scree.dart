@@ -67,21 +67,22 @@ class _MobileNumberScreenState extends State<MobileNumberScreen> {
                 MyButtonWidget(
                     onTap: () async {
                       await FirebaseAuth.instance.verifyPhoneNumber(
-                          verificationCompleted:
-                              (PhoneAuthCredential credential) {},
-                          verificationFailed: (FirebaseAuthException ex) {},
-                          codeSent: (String verificationId, int? resentToken) {
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) => OtpScreen(
-                                  verificationId: verificationId,
-                                ),
+                        verificationCompleted:
+                            (PhoneAuthCredential credential) {},
+                        verificationFailed: (FirebaseAuthException ex) {},
+                        codeSent: (String verificationId, int? resentToken) {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => OtpScreen(
+                                verificationId: verificationId,
                               ),
-                            );
-                          },
-                          codeAutoRetrievalTimeout: (String verificationId) {},
-                          phoneNumber: phoneController.text.toString());
+                            ),
+                          );
+                        },
+                        codeAutoRetrievalTimeout: (String verificationId) {},
+                        phoneNumber: phoneController.text.toString(),
+                      );
                     },
                     text: 'Get OTP'),
               ],

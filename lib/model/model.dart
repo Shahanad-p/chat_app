@@ -5,14 +5,12 @@ class UserPostModel {
   final String userEmail;
   final String message;
   final List<String> likes;
-  // final DateTime timestamp;
 
   UserPostModel({
     required this.id,
     required this.userEmail,
     required this.message,
     required this.likes,
-    // required this.timestamp,
   });
 
   factory UserPostModel.fromFirestore(DocumentSnapshot doc) {
@@ -22,7 +20,6 @@ class UserPostModel {
       userEmail: data['UserEmail'] ?? '',
       message: data['Message'] ?? '',
       likes: List.from(data['Likes'] ?? []),
-      // timestamp: (data['Timestamb']).toDate(),
     );
   }
 }
