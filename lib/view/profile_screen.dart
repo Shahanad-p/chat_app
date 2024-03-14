@@ -7,60 +7,6 @@ import 'package:provider/provider.dart';
 
 class ProfileScreen extends StatelessWidget {
   const ProfileScreen({super.key});
-  // //user
-  // final currentUser = FirebaseAuth.instance.currentUser!;
-  // //all users
-  // final userCollection = FirebaseFirestore.instance.collection('Users');
-
-  // //edit field
-  // Future<void> editFields(String fields) async {
-  //   String newValue = '';
-  //   await showDialog(
-  //     context: context,
-  //     builder: (context) => AlertDialog(
-  //       backgroundColor: Colors.grey[900],
-  //       title: Text(
-  //         'Edit $fields',
-  //         style: TextStyle(color: Colors.white),
-  //       ),
-  //       content: TextField(
-  //         autofocus: true,
-  //         style: TextStyle(color: Colors.white),
-  //         decoration: InputDecoration(
-  //           hintText: 'Enter new $fields',
-  //           hintStyle: TextStyle(color: Colors.grey),
-  //         ),
-  //         onChanged: (value) {
-  //           newValue = value;
-  //         },
-  //       ),
-  //       actions: [
-  //         TextButton(
-  //             onPressed: () => Navigator.pop(context),
-  //             child: Text(
-  //               'Cancel',
-  //               style: TextStyle(fontWeight: FontWeight.bold),
-  //             )),
-  //         TextButton(
-  //           onPressed: () async {
-  //             if (newValue.trim().isNotEmpty) {
-  //               //only update if there is something in the textfield
-  //               await userCollection
-  //                   .doc(currentUser.email)
-  //                   .update({fields: newValue});
-  //               setState(() {}); // update UI
-  //               Navigator.of(context).pop();
-  //             }
-  //           },
-  //           child: Text(
-  //             'Save',
-  //             style: TextStyle(fontWeight: FontWeight.bold),
-  //           ),
-  //         ),
-  //       ],
-  //     ),
-  //   );
-  // }
 
   @override
   Widget build(BuildContext context) {
