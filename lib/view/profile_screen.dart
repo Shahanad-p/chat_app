@@ -34,7 +34,7 @@ class ProfileScreen extends StatelessWidget {
                 children: [
                   //profile pic
                   Padding(
-                    padding: const EdgeInsets.only(top: 30),
+                    padding: const EdgeInsets.only(top: 30.8),
                     child: CircleAvatar(
                       backgroundColor: const Color.fromARGB(255, 226, 220, 220),
                       radius: 50,

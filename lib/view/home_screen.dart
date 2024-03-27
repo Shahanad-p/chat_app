@@ -62,7 +62,7 @@ class HomeScreen extends StatelessWidget {
                       );
                     }),
               ),
-              SizedBox(height: 30),
+              SizedBox(height: 30.10),
               Row(
                 children: [
                   Expanded(
@@ -77,7 +77,7 @@ class HomeScreen extends StatelessWidget {
                       icon: Icon(Icons.arrow_circle_up)),
                 ],
               ),
-              SizedBox(height: 20),
+              SizedBox(height: 20.10),
               Text(
                 'Logged in as : ${value.currentUser.email!}',
                 style: TextStyle(

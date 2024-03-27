@@ -42,7 +42,7 @@ class _OtpScreenState extends State<OtpScreen> {
                     'Verification',
                     style: TextStyle(fontSize: 25, fontWeight: FontWeight.bold),
                   ),
-                  SizedBox(height: 10),
+                  SizedBox(height: 10.8),
                   Text(
                     'Enter the OTP sent to your phone',
                     style: TextStyle(
@@ -51,7 +51,7 @@ class _OtpScreenState extends State<OtpScreen> {
                         color: Colors.grey),
                     textAlign: TextAlign.center,
                   ),
-                  SizedBox(height: 20),
+                  SizedBox(height: 20.8),
                   TextFormField(
                     cursorColor: Colors.green,
                     controller: otpController,

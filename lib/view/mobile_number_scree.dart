@@ -37,7 +37,7 @@ class _MobileNumberScreenState extends State<MobileNumberScreen> {
                   'Register',
                   style: TextStyle(fontSize: 25, fontWeight: FontWeight.bold),
                 ),
-                SizedBox(height: 10),
+                SizedBox(height: 10.8),
                 Text(
                   'Add your phone number. We will sent you a verification code',
                   style: TextStyle(
@@ -46,7 +46,7 @@ class _MobileNumberScreenState extends State<MobileNumberScreen> {
                       color: Colors.grey),
                   textAlign: TextAlign.center,
                 ),
-                SizedBox(height: 20),
+                SizedBox(height: 20.8),
                 TextFormField(
                   cursorColor: Colors.green,
                   controller: phoneController,

@@ -84,7 +84,7 @@ class LoginScreen extends StatelessWidget {
                     children: [
                       Expanded(
                         child: Container(
-                          margin: EdgeInsets.symmetric(horizontal: 10),
+                          margin: EdgeInsets.symmetric(horizontal: 10.10),
                           color: Colors.grey,
                           height: 1,
                         ),
@@ -96,7 +96,7 @@ class LoginScreen extends StatelessWidget {
                       ),
                       Expanded(
                         child: Container(
-                          margin: EdgeInsets.symmetric(horizontal: 10),
+                          margin: EdgeInsets.symmetric(horizontal: 10.10),
                           color: Colors.grey,
                           height: 1,
                         ),

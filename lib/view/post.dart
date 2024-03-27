@@ -62,7 +62,7 @@ class _UserPostState extends State<UserPost> {
             children: [
               CircleAvatar(
                 backgroundColor: Colors.white,
-                radius: 30,
+                radius: 30.10,
                 child: ClipRRect(
                   borderRadius: BorderRadius.circular(50),
                   child: Image.asset(

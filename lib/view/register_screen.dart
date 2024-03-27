@@ -21,7 +21,7 @@ class RegisterScreen extends StatelessWidget {
               builder: (context, value, child) => Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  SizedBox(height: 40),
+                  SizedBox(height: 40.8),
                   CircleAvatar(
                     backgroundColor: Colors.white,
                     radius: 50,
