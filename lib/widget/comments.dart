@@ -15,7 +15,7 @@ class MyComments extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       decoration: BoxDecoration(
-          color: Colors.grey[300], borderRadius: BorderRadius.circular(5)),
+          color: Colors.grey[300], borderRadius: BorderRadius.circular(5.8)),
       child: Container(
         padding: EdgeInsets.all(6),
         margin: EdgeInsets.all(6),

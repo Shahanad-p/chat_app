@@ -19,7 +19,7 @@ class MyDrawer extends StatelessWidget {
       child: Column(
         children: [
           Container(
-            padding: EdgeInsets.only(top: 60, bottom: 20),
+            padding: EdgeInsets.only(top: 60.8, bottom: 20.8),
             child: CircleAvatar(
               radius: 50,
               backgroundColor: Colors.white,

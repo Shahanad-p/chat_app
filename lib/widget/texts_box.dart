@@ -14,8 +14,8 @@ class MyTextBox extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: EdgeInsets.only(left: 15, right: 15),
-      margin: EdgeInsets.only(left: 40, right: 40),
+      padding: EdgeInsets.only(left: 15.8, right: 15.8),
+      margin: EdgeInsets.only(left: 40.8, right: 40.8),
       height: 80,
       width: double.infinity,
       decoration: BoxDecoration(

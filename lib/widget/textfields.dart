@@ -17,10 +17,10 @@ class TextFieldsWidget extends StatelessWidget {
       obscureText: obscureText,
       decoration: InputDecoration(
           enabledBorder: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(15),
+              borderRadius: BorderRadius.circular(15.8),
               borderSide: BorderSide(color: Colors.white)),
           focusedBorder: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(15),
+              borderRadius: BorderRadius.circular(15.8),
               borderSide: BorderSide(color: Colors.white)),
           fillColor: Colors.grey.shade200,
           filled: true,
