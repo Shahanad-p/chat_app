@@ -27,7 +27,7 @@ class _OtpScreenState extends State<OtpScreen> {
               child: Column(
                 children: [
                   Container(
-                    padding: EdgeInsets.all(20),
+                    padding: EdgeInsets.all(20.10),
                     child: ClipRRect(
                       borderRadius: BorderRadius.circular(100),
                       child: Image.asset(

@@ -64,7 +64,7 @@ class _UserPostState extends State<UserPost> {
                 backgroundColor: Colors.white,
                 radius: 30.10,
                 child: ClipRRect(
-                  borderRadius: BorderRadius.circular(50),
+                  borderRadius: BorderRadius.circular(50.10),
                   child: Image.asset(
                     'assets/user.png',
                     fit: BoxFit.cover,

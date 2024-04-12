@@ -30,7 +30,7 @@ class HomeScreen extends StatelessWidget {
         ),
       ),
       body: Padding(
-        padding: const EdgeInsets.all(12),
+        padding: const EdgeInsets.all(12.10),
         child: Consumer<HomeProvider>(
           builder: (context, value, child) => Column(
             children: [
